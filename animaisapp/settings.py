@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'species.apps.SpeciesConfig',
+    'breeds.apps.BreedsConfig'
 ]
 
 MIDDLEWARE = [

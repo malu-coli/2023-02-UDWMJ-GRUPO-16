@@ -1,7 +1,7 @@
 from django.db import models
 
 class Specie(models.Model):
-    name = models.CharField('Nome', max_length=50)
+    name = models.CharField('Nome', max_length=50, unique=True)
     description = models.TextField('Descricao', max_length=100)
 
     class Meta:
@@ -9,5 +9,5 @@ class Specie(models.Model):
         verbose_name_plural = 'Especies'
         ordering =['id']
 
-    def str(self):
+    def __str__(self):
         return self.name

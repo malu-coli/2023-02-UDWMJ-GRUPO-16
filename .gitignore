@@ -1,3 +1,8 @@
 db.sqlite3
 .env
 /animaisapp/__pycache__/*
+/apps/species/__pycache__/*
+/apps/species/migrations/*
+/apps/breeds/__pycache__/*
+/apps/breeds/migrations/*
+/__pycache__/*
