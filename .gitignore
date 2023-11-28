@@ -7,4 +7,6 @@ db.sqlite3
 /apps/breeds/migrations/*
 /apps/animals/__pycache__/*
 /apps/animals/migrations/*
+/apps/clients/__pycache__/*
+/apps/clients/migrations/*
 /__pycache__/*
