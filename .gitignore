@@ -11,4 +11,6 @@ db.sqlite3
 /apps/clients/migrations/*
 /apps/requests/__pycache__/*
 /apps/requests/migrations/*
+/apps/core/__pycache__/*
+/apps/core/migrations/*
 /__pycache__/*

@@ -7,5 +7,6 @@ urlpatterns = [
     path('racas/', include('breeds.urls', namespace='breeds')),
     path('animais/', include('animals.urls', namespace='animals')),
     path('clientes/', include('clients.urls', namespace= 'clients')),
-    path('solicitacoes/', include('requests.urls', namespace= 'requests'))
+    path('solicitacoes/', include('requests.urls', namespace= 'requests')),
+    path('', include('core.urls', namespace='core')),
 ]
