@@ -9,4 +9,6 @@ db.sqlite3
 /apps/animals/migrations/*
 /apps/clients/__pycache__/*
 /apps/clients/migrations/*
+/apps/requests/__pycache__/*
+/apps/requests/migrations/*
 /__pycache__/*
