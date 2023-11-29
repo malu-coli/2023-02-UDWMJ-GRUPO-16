@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'widget_tweaks',
     'species.apps.SpeciesConfig',
     'breeds.apps.BreedsConfig',
     'animals.apps.AnimalsConfig',
