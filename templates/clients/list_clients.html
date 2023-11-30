@@ -33,10 +33,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for client in client %}
+                    {% for client in clients %}
                         <tr>
                             <th scope="row">{{ client.id }}</th>
-                            <td>{{ client.name }}</td>
+                            <td>{{ client.first_name }}</td>
                             <td>{{ client.last_name }}</td>
                             <td>{{ client.address }}</td>
                             <td>{{ client.cell_phone }}</td>
@@ -44,10 +44,10 @@
                             <td>{{ client.suid }}</td>
                             <td>{{ client.gender }}</td>
                             <td>
-                                <a href="{% url 'client:edit_client' client.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                <a href="{% url 'clients:edit_client' client.id %}" class="btn btn-primary btn-sm">Editar</a>
                             </td>
                             <td>
-                                <a href="{% url 'client:delete_client' client.id %}" class="btn btn-danger btn-sm ">Excluir</a>
+                                <a href="{% url 'clients:delete_client' client.id %}" class="btn btn-danger btn-sm ">Excluir</a>
                             </td>
                         </tr> 
                     {% endfor %}
