@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    Lista de Solicitações - {{ block.super }}
+
+{% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+        <br />
+        <h5><b>Lista de Solicitações</b></h5>
+        <div class="row">
+            <div class ="col-md-12">
+                <br />
+                    <a href="{% url 'requests:add_request' %}">Cadastro de nova solicitação</a>
+                <br />
+                <br />
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Animal</th>
+                    <th scope="col">Criado em</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                        <tr>
+                            <th scope="row">{{ request.id }}</th>
+                            <td>{{ request.status }}</td>
+                            <td>{{ request.client }}</td>
+                            <td>{{ request.animal }}</td>
+                            <td>{{ request.created_at }}</td>
+                            <td>
+                                <a href="{% url 'requests:edit_request' request.id %}" class="btn btn-primary btn-sm">Editar</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'requests:delete_request' request.id %}" class="btn btn-danger btn-sm ">Excluir</a>
+                            </td>
+                        </tr> 
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
