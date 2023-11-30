@@ -46,7 +46,7 @@
                             <td>{{ animal.color }}</td>
                             <td>{{ animal.gender }}</td>
                             <td>{{ animal.is_adopted }}</td>
-                            <td>{{ animal.image }}</td>
+                            <td> <img class="imagem-animal" src="{{ animal.image.url }}" alt="Imagem do Animal"> </td>
                             <td>
                                 <a href="{% url 'animals:edit_animal' animal.id %}" class="btn btn-primary btn-sm">Editar</a>
                             </td>
