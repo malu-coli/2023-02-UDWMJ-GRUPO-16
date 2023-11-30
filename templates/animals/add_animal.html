@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %} 
+
+{% block title %}
+
+    Adicionar Categoria - {{ block.super }}
+
+{% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+        <br />
+    <h5><b>Cadastro de Animal</b></h5>
+        <div class="row">
+            <div class ="col-md-12">
+                <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                   <label for="{{ form.name.id_for_label }}">Nome</label>
+                   {{ form.name|add_class:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.age.id_for_label }}">Idade</label>
+                    {{ form.age|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Descricao</label>
+                    {{ form.description|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.specie.id_for_label }}">Espécie</label>
+                    {{ form.specie|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.breed.id_for_label }}">Raça</label>
+                    {{ form.breed|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.color.id_for_label }}">Cor</label>
+                    {{ form.color|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.gender.id_for_label }}">Gênero</label>
+                    {{ form.gender|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.is_adopted.id_for_label }}">Status de adoção</label>
+                    {{ form.is_adopted|add_class:"form-control" }}
+                 </div>
+                 <div class="form-group">
+                    <label for="{{ form.image.id_for_label }}">Fotinho do bichinho</label>
+                    {{ form.image|add_class:"form-control" }}
+                 </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
