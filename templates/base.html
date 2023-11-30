@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <title>{% block title %}ZooTe!{% endblock title %}</title>
 </head>
 <body>
@@ -30,7 +31,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown05">
-                        <a class="dropdown-item" href="#">Animais</a>
+                        <a class="dropdown-item" href="{% url 'animals:list_animals' %}">Animais</a>
                         <a class="dropdown-item" href="{% url 'species:list_species' %}">Espécies</a>
                         <a class="dropdown-item" href="{% url 'breeds:list_breeds' %}">Raças</a>
                     </div>
