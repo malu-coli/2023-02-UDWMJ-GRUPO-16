@@ -8,5 +8,8 @@ router = routers.DefaultRouter()
 router.register('solicitacoes', views.RequestViewSet, basename='solicitacoes')
 
 urlpatterns = [
-    path('', include(router.urls) )
+    path('', views.list_requests, name='list_requests'),
+    path('adicionar/', views.add_request, name='add_request'),
+    path('editar/<int:id_request>/', views.edit_request, name='edit_request'),
+    path('excluir/<int:id_request>/', views.delete_request, name='delete_request'),
 ]
