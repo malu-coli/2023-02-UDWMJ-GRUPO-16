@@ -12,7 +12,7 @@ def add_animal(request):
     template_name = 'animals/add_animal.html'
     context = {}
     if request.method == 'POST':
-        form = AnimalForm(request.POST)
+        form = AnimalForm(request.POST, request.FILES)
         if form.is_valid():
             f = form.save(commit=False)
             f.save()

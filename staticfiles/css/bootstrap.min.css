@@ -41,6 +41,11 @@
     box-sizing: border-box
 }
 
+.imagem-animal {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 html {
     font-family: sans-serif;
     line-height: 1.15;
@@ -4764,7 +4769,9 @@ input[type=submit].btn-block {
 }
 
 .navbar {
-    position: relative;
+    width: 100%;
+    position: fixed;
+    top:0;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;

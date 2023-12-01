@@ -4,6 +4,7 @@ from .serializer import ClientSerializer
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ClientForm
 from .models import Client
+from django.contrib import messages
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
@@ -19,6 +20,10 @@ def add_client(request):
             f.save()
             form.save_m2m()
             return redirect('clients:list_clients')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"Erro no campo {field}: {error}")
     form = ClientForm()
     context['form'] = form
     return render(request, template_name, context)

@@ -6,40 +6,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <title>{% block title %}ZooTe!{% endblock title %}</title>
 </head>
 <body>
-
+    <section>
     {% block body %}
-
     {% endblock body %}
-
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.mask.min.js' %}"></script>
     <script src="{% static 'js/jquery-ui.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">ZooTe!</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarsExample05">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown05">
-                        <a class="dropdown-item" href="{% url 'animals:list_animals' %}">Animais</a>
-                        <a class="dropdown-item" href="{% url 'species:list_species' %}">Espécies</a>
-                        <a class="dropdown-item" href="{% url 'breeds:list_breeds' %}">Raças</a>
-                        <a class="dropdown-item" href="{% url 'clients:list_clients' %}">Clientes</a>
-                        <a class="dropdown-item" href="{% url 'requests:list_requests' %}">Solicitações</a>
-                    </div>
-                </li>
-            </ul>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border border-dark p-2 mb-2 border-opacity-50">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'core:home' %}">ZooTe!</a>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item align-self-start">
+                        <a class="nav-link" href="#">Sobre Nós</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'animals:list_animals' %}">Animais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'species:list_species' %}">Espécies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'breeds:list_breeds' %}">Raças</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'clients:list_clients' %}">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'requests:list_requests' %}">Solicitações</a>
+                    </li>
+                </ul>
         </div>
     </nav>
+    </section>
 </body>
 </html>
