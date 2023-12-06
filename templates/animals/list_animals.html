@@ -100,7 +100,7 @@ Lista de Animais - {{ block.super }}
                             <p><strong>Espécie:</strong> {{ animal.specie }}</p>
                             <p><strong>Raça:</strong> {{ animal.breed.name }}</p>
                             <p><strong>Cor:</strong> {{ animal.color }}</p>
-                            <p><strong>Gênero:</strong> {{ animal.gender }}</p>
+                            <p><strong>Gênero:</strong> {{ animal.get_gender_display }}</p>
                             <p><strong>Status de Adoção:</strong>
                                 {% if animal.is_adopted %}
                                 Adotado
