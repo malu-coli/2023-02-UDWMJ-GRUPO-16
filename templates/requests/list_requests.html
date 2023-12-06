@@ -14,7 +14,7 @@ Lista de Solicitação - {{ block.super }}
                     class="bi bi-plus-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     <path
-                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
                 </svg>
                 Cadastro de nova Solicitação
             </a>
@@ -29,6 +29,8 @@ Lista de Solicitação - {{ block.super }}
                             <th scope="col">Criado em</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +41,31 @@ Lista de Solicitação - {{ block.super }}
                             <td>{{ request.created_at }} </td>
                             <td class="d-flex justify-content-end">
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    {% if request.status == 'P' %}
+                                    <a href="#" class="btn btn-success btn-sm me-2" data-bs-toggle="modal"
+                                        data-bs-target="#confirmAccept{{ request.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+                                            <path
+                                                d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                                        </svg>
+                                        Aceitar
+                                    </a>
+                                    <a href="#" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal"
+                                        data-bs-target="#confirmDecline{{ request.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path
+                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                        </svg>
+                                        Recusar
+                                    </a>
+                                    {% endif %}
+                                    <button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal"
                                         data-bs-target="#confirmDelete{{ request.id }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -48,16 +74,54 @@ Lista de Solicitação - {{ block.super }}
                                         </svg> Excluir
                                     </button>
                                 </div>
-                                {% if request.status == 'P' %}
-                                <a href="{% url 'requests:accept_request' request.id %}" class="btn btn-success btn-sm me-2">
-                                    Aceitar
-                                </a>
-                                <a href="{% url 'requests:decline_request' request.id %}" class="btn btn-danger btn-sm">
-                                    Recusar
-                                </a>
-                                {% endif %}
                             </td>
                         </tr>
+
+                        <!-- Modal de Confirmação de Aceitar -->
+                        <div class="modal fade" id="confirmAccept{{ request.id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmar Aceitar</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Você tem certeza de que deseja aceitar esta solicitação?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <a href="{% url 'requests:accept_request' request.id %}"
+                                            class="btn btn-success">Aceitar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal de Confirmação de Recusar -->
+                        <div class="modal fade" id="confirmDecline{{ request.id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmar Recusar</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Você tem certeza de que deseja recusar esta solicitação?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <a href="{% url 'requests:decline_request' request.id %}"
+                                            class="btn btn-danger">Recusar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Modal de Confirmação de Exclusão -->
                         <div class="modal fade" id="confirmDelete{{ request.id }}" tabindex="-1"
@@ -70,13 +134,14 @@ Lista de Solicitação - {{ block.super }}
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Você tem certeza de que deseja excluir a espécie '{{ request.name }}'?</p>
+                                        <p>Você tem certeza de que deseja excluir esta solicitação? Essa ação não pode
+                                            ser desfeita.</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar</button>
                                         <a href="{% url 'requests:delete_request' request.id %}"
-                                            class="btn btn-danger">Confirmar Exclusão</a>
+                                            class="btn btn-danger">Excluir</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +149,7 @@ Lista de Solicitação - {{ block.super }}
                         {% endfor %}
                     </tbody>
                 </table>
-                
+
                 <h1>Solicitações Finalizadas</h1>
                 <table class="table table-hover">
                     <thead>

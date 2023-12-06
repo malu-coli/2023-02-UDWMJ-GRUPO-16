@@ -6,6 +6,18 @@ Lista de Animais - {{ block.super }}
 
 {% block body %}
 
+<style>
+    .adopted-banner {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+</style>
 
 <section class="intro" id="intro">
     <div class="container">
@@ -44,6 +56,9 @@ Lista de Animais - {{ block.super }}
                 <div class="col card" id="card-animal">
                     <img src="{{ animal.image.url }}" class="card-img-top animal-image" alt="{{ animal.name }}"
                         data-bs-toggle="modal" data-bs-target="#animalModal{{ animal.id }}">
+                    {% if animal.is_adopted %}
+                    <div class="adopted-banner">Adotado</div>
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ animal.name }}</h5>
                         <p class="card-text">{{ animal.breed }}</p>
@@ -111,7 +126,8 @@ Lista de Animais - {{ block.super }}
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Você tem certeza de que deseja excluir o animal '{{ animal.name }}'?</p>
+                            <p>Você tem certeza de que deseja excluir o animal '{{ animal.name }}'? Essa ação não pode
+                                ser desfeita.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -180,7 +196,6 @@ Lista de Animais - {{ block.super }}
                 card = cards[i];
                 title = card.querySelector(".card-title");
                 breed = card.querySelector(".card-text");
-
 
                 if ((title.innerText.toUpperCase().indexOf(filter) > -1) &&
                     (breed.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
