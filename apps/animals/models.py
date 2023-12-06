@@ -9,14 +9,14 @@ class Animal(models.Model):
     age = models.IntegerField('Idade')
     specie = models.ForeignKey(Specie, on_delete=models.CASCADE,verbose_name='Espécie')
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Raça')
-    color = models.TextField('Cor', max_length=100)
+    color = models.CharField('Cor', max_length=25)
     GENDER_CHOICES = (
         ('M', 'Macho'),
         ('F', 'Fêmea')
     )
     gender = models.CharField('Genero', max_length=1, choices=GENDER_CHOICES)
     is_adopted = models.BooleanField('Adotado', default=False)
-    image = models.ImageField('Fotinho', upload_to='animal_images/', null=True, blank=True)
+    image = models.ImageField('Fotinho', upload_to='animal_images/', null=False, blank=False)
     
     class Meta:
         verbose_name = 'Animal'

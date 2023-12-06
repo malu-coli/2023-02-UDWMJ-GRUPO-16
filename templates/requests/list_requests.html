@@ -8,7 +8,7 @@ Lista de Solicitação - {{ block.super }}
 <section id="intro" class="intro">
     <div class="container">
         <div class="d-flex justify-content-between align-items-start">
-            <h1 class="flex-grow-1"><b>Lista de Solicitação</b></h1>
+            <h1 class="flex-grow-1"><b>Solicitações pendentes</b></h1>
             <a class="btn btn-success" style="margin-top:3px;" href="{% url 'requests:add_request' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -24,7 +24,6 @@ Lista de Solicitação - {{ block.super }}
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Status</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Animal</th>
                             <th scope="col">Criado em</th>
@@ -33,24 +32,13 @@ Lista de Solicitação - {{ block.super }}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for request in requests %}
+                        {% for request in pending_requests %}
                         <tr>
-                            <td>{{ request.status }}</td>
                             <td>{{ request.client }} </td>
                             <td>{{ request.animal }} </td>
                             <td>{{ request.created_at }} </td>
                             <td class="d-flex justify-content-end">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{% url 'requests:edit_request' request.id %}"
-                                        class="btn btn-success btn-sm me-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path
-                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd"
-                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                        </svg> Editar
-                                    </a>
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#confirmDelete{{ request.id }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -60,6 +48,14 @@ Lista de Solicitação - {{ block.super }}
                                         </svg> Excluir
                                     </button>
                                 </div>
+                                {% if request.status == 'P' %}
+                                <a href="{% url 'requests:accept_request' request.id %}" class="btn btn-success btn-sm me-2">
+                                    Aceitar
+                                </a>
+                                <a href="{% url 'requests:decline_request' request.id %}" class="btn btn-danger btn-sm">
+                                    Recusar
+                                </a>
+                                {% endif %}
                             </td>
                         </tr>
 
@@ -85,6 +81,32 @@ Lista de Solicitação - {{ block.super }}
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <h1>Solicitações Finalizadas</h1>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Resultado</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Animal</th>
+                            <th scope="col">Criado em</th>
+                            <th scope="col">Finalizado em</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in finished_requests %}
+                        <tr>
+                            <td>{{ request.get_status_display }}</td>
+                            <td>{{ request.client }} </td>
+                            <td>{{ request.animal }} </td>
+                            <td>{{ request.created_at }} </td>
+                            <td>{{ request.finished_at }} </td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>

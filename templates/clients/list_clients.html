@@ -90,7 +90,7 @@ Lista de Clientes - {{ block.super }}
                                             <p><strong>Email:</strong> {{ client.email }}</p>
                                             <p><strong>CPF:</strong> <span class="cpf-input">{{ client.suid }}</span>
                                             </p>
-                                            <p><strong>Gênero:</strong> {{ client.gender }}</p>
+                                            <p><strong>Gênero:</strong> {{ client.get_gender_display }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -106,9 +106,8 @@ Lista de Clientes - {{ block.super }}
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Você tem certeza de que deseja excluir o cliente '{{ client.first_name }}
-                                                {{
-                                                client.last_name }}'?</p>
+                                            <p>Você tem certeza de que deseja excluir '{{ client.first_name }}
+                                                {{ client.last_name }}'?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"

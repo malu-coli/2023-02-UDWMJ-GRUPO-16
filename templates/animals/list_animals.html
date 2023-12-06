@@ -83,10 +83,16 @@ Lista de Animais - {{ block.super }}
                             <p><strong>Idade:</strong> {{ animal.age }}</p>
                             <p><strong>Descrição:</strong> {{ animal.description }}</p>
                             <p><strong>Espécie:</strong> {{ animal.specie }}</p>
-                            <p><strong>Raça:</strong> {{ animal.breed }}</p>
+                            <p><strong>Raça:</strong> {{ animal.breed.name }}</p>
                             <p><strong>Cor:</strong> {{ animal.color }}</p>
                             <p><strong>Gênero:</strong> {{ animal.gender }}</p>
-                            <p><strong>Status de Adoção:</strong> {{ animal.is_adopted }}</p>
+                            <p><strong>Status de Adoção:</strong>
+                                {% if animal.is_adopted %}
+                                Adotado
+                                {% else %}
+                                Não adotado
+                                {% endif %}
+                            </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -196,8 +202,6 @@ Lista de Animais - {{ block.super }}
     document.addEventListener('DOMContentLoaded', function () {
         var myModal = new bootstrap.Modal(document.getElementById('animalModal{{ animal.id }}'));
     });
-</script>
-
 </script>
 
 

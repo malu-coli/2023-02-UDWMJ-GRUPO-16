@@ -25,9 +25,11 @@ def add_request(request):
 
 def list_requests(request):
     template_name = 'requests/list_requests.html'
-    requests = Request.objects.filter()
+    pending_requests = Request.objects.filter(status='P')
+    finished_requests = Request.objects.filter(status__in=['A', 'R'])
     context = {
-        'requests': requests
+        'pending_requests': pending_requests,
+        'finished_requests': finished_requests
     }
     return render(request, template_name, context)
 
@@ -47,4 +49,24 @@ def edit_request(request, id_request):
 def delete_request(request, id_request):
     request = Request.objects.get(id=id_request)
     request.delete()
+    return redirect('requests:list_requests')
+
+def accept_request(request, request_id):
+    request_instance = Request.objects.get(pk=request_id)
+
+    request_instance.status = 'A'
+    request_instance.save()
+
+    animal_instance = request_instance.animal
+    animal_instance.is_adopted = True
+    animal_instance.save()
+
+    return redirect('requests:list_requests')
+
+def decline_request(request, request_id):
+    request_instance = Request.objects.get(pk=request_id)
+
+    request_instance.status = 'R'
+    request_instance.save()
+
     return redirect('requests:list_requests')
