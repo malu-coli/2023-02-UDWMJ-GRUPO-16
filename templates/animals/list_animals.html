@@ -6,16 +6,42 @@ Lista de Animais - {{ block.super }}
 
 {% block body %}
 
+
 <section class="intro" id="intro">
     <div class="container">
         <div class="d-flex justify-content-between align-items-start">
-           <h1 class="flex-grow-1"><b>Lista de Animais</b></h5></h1>
-           <a class="btn btn-success" style="margin-top:3px;" href="{% url 'animals:add_animal' %}">Cadastro de novo Animal</a>
+            <h1 class="flex-grow-1"><b>Lista de Animais</b></h1>
+            <a class="btn btn-success" style="margin-top:3px;" href="{% url 'animals:add_animal' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                </svg>
+                Cadastro de novo Animal
+            </a>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="margin-bottom:40px;">
+        <div class="input-group mb-3 justify-content-end ms-1">
+            <input type="text" class="form-control" placeholder="Pesquisar pelo nome" id="search-input">
+            <button class="btn btn-outline-success" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+            </button>
+            <select class="btn btn-success ms-3" id="breed-filter">
+                <option value="">Todas as Raças</option>
+                {% for breed in breeds %}
+                <option value="{{ breed }}">{{ breed }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="animal-card-container"
+            style="margin-bottom:40px;">
             {% for animal in animals %}
             <div class="col">
-                <div class="card" id="card-animal">
+                <div class="col card" id="card-animal">
                     <img src="{{ animal.image.url }}" class="card-img-top animal-image" alt="{{ animal.name }}"
                         data-bs-toggle="modal" data-bs-target="#animalModal{{ animal.id }}">
                     <div class="card-body">
@@ -32,7 +58,8 @@ Lista de Animais - {{ block.super }}
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg> Editar
                         </a>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ animal.id }}">
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#confirmDelete{{ animal.id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash3" viewBox="0 0 16 16">
                                 <path
@@ -43,7 +70,7 @@ Lista de Animais - {{ block.super }}
                 </div>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal Detalhes -->
             <div class="modal fade" id="animalModal{{ animal.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -68,8 +95,9 @@ Lista de Animais - {{ block.super }}
                 </div>
             </div>
 
-             <!-- Modal de Confirmação de Exclusão -->
-             <div class="modal fade" id="confirmDelete{{ animal.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- Modal de Confirmação de Exclusão -->
+            <div class="modal fade" id="confirmDelete{{ animal.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -81,18 +109,97 @@ Lista de Animais - {{ block.super }}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <a href="{% url 'animals:delete_animal' animal.id %}" class="btn btn-danger">Confirmar Exclusão</a>
+                            <a href="{% url 'animals:delete_animal' animal.id %}" class="btn btn-danger">Confirmar
+                                Exclusão</a>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            {% endfor %}
         </div>
     </div>
 </section>
 
 <script>
-    var myModal = new bootstrap.Modal(document.getElementById('animalModal'));
+    document.addEventListener('DOMContentLoaded', function () {
+        function sortCardsAlphabetically(cards) {
+            return Array.from(cards).sort(function (a, b) {
+                var nameA = a.querySelector(".card-title").innerText.toUpperCase();
+                var nameB = b.querySelector(".card-title").innerText.toUpperCase();
+                return nameA.localeCompare(nameB);
+            });
+        }
+
+        function updateCardLayout(cards) {
+            var container = document.getElementById("animal-card-container");
+
+            container.innerHTML = "";
+
+            cards.forEach(function (card) {
+                var col = document.createElement("div");
+                col.classList.add("col");
+                col.appendChild(card);
+                container.appendChild(col);
+            });
+
+            container.querySelectorAll('.card').forEach(function (card) {
+                card.style.margin = '10px';
+            });
+        }
+
+        var cards = document.getElementsByClassName("card");
+
+        var sortedCards = sortCardsAlphabetically(cards);
+
+        updateCardLayout(sortedCards);
+
+        document.getElementById('search-input').addEventListener('input', function () {
+            searchAnimals();
+        });
+
+        document.getElementById('breed-filter').addEventListener('change', function () {
+            searchAnimals();
+        });
+
+        function searchAnimals() {
+            var input, filter, cards, card, title, breedFilter, i;
+            input = document.getElementById("search-input");
+            filter = input.value.toUpperCase();
+            cards = sortedCards;
+            breedFilter = document.getElementById("breed-filter").value.toUpperCase();
+
+            var matchingCards = [];
+            var nonMatchingCards = [];
+
+            for (i = 0; cards && i < cards.length; i++) {
+                card = cards[i];
+                title = card.querySelector(".card-title");
+                breed = card.querySelector(".card-text");
+
+
+                if ((title.innerText.toUpperCase().indexOf(filter) > -1) &&
+                    (breed.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
+                    matchingCards.push(card);
+                } else {
+                    card.style.display = "none";
+                    nonMatchingCards.push(card);
+                }
+            }
+
+            updateCardLayout(matchingCards);
+
+            nonMatchingCards.forEach(function (card) {
+                card.style.display = "";
+            });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var myModal = new bootstrap.Modal(document.getElementById('animalModal{{ animal.id }}'));
+    });
 </script>
+
+</script>
+
+
+{% endfor %}
 {% endblock body %}

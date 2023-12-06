@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import AnimalForm
-from .models import Animal
 from rest_framework import viewsets
 from .serializer import AnimalSerializer
+from .models import Animal, Breed, Specie
 
 class AnimalViewSet(viewsets.ModelViewSet):
     queryset = Animal.objects.all()
@@ -24,9 +24,14 @@ def add_animal(request):
 
 def list_animals(request):
     template_name = 'animals/list_animals.html'
-    animals = Animal.objects.filter()
+    
+    animals = Animal.objects.all()
+    breeds_list = Breed.objects.values_list('name', flat=True).distinct() 
+    species_list = Specie.objects.values_list('name', flat=True).distinct() 
     context = {
-        'animals': animals
+        'animals': animals,
+        'breeds': breeds_list,
+        'species': species_list
     }
     return render(request, template_name, context)
 

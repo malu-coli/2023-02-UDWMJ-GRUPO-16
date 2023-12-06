@@ -44,6 +44,19 @@ section p {
     cursor: pointer;
 }
 
+#animalCardContainer {
+    display: flex !important;
+    flex-wrap: wrap !important; 
+}
+
+.card {
+    flex: 0 0 calc(33.33% - 20px) !important;
+    margin: 10px !important;
+    padding: 0 !important;
+    max-height: 336px !important;
+    width: 350px !important;
+}
+
 #btn-navbar:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
