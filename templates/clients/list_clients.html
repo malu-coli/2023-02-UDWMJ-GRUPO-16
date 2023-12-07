@@ -86,7 +86,7 @@ Lista de Clientes - {{ block.super }}
                                         <div class="modal-body">
                                             <p><strong>Nome:</strong> {{ client.first_name }} {{ client.last_name }}</p>
                                             <p><strong>Endereço:</strong> {{ client.address }}</p>
-                                            <p><strong>Celular:</strong> {{ client.cell_phone }}</p>
+                                            <p><strong>Celular:</strong> <span class="cell-input"> {{ client.cell_phone }}</span></p>
                                             <p><strong>Email:</strong> {{ client.email }}</p>
                                             <p><strong>CPF:</strong> <span class="cpf-input">{{ client.suid }}</span>
                                             </p>
