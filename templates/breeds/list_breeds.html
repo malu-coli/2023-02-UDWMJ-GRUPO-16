@@ -38,8 +38,8 @@ Lista de Raças - {{ block.super }}
                             <td class="description-cell">
                                 <div class="description-content" data-bs-toggle="modal"
                                     data-bs-target="#descriptionModal{{ breed.id }}">
-                                    {{ breed.description|truncatechars:90 }}
-                                    {% if breed.description|length > 90 %}
+                                    {{ breed.description|truncatechars:85 }}
+                                    {% if breed.description|length > 85 %}
                                     <a href="#" class="read-more">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#04471c"
                                             class="bi bi-plus-circle" viewBox="0 0 16 16">

@@ -42,10 +42,10 @@ Lista de Animais - {{ block.super }}
                         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                 </svg>
             </button>
-            <select class="btn btn-success ms-3" id="breed-filter">
-                <option value="">Todas as Raças</option>
-                {% for breed in breeds %}
-                <option value="{{ breed }}">{{ breed }}</option>
+            <select class="btn btn-success ms-3" id="specie-filter">
+                <option value="">Todas as Espécies</option>
+                {% for specie in species %}
+                <option value="{{ specie }}">{{ specie }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -61,7 +61,7 @@ Lista de Animais - {{ block.super }}
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ animal.name }}</h5>
-                        <p class="card-text">{{ animal.breed }}</p>
+                        <p class="card-text">{{ animal.specie }}<span> {{ animal.breed.name}} </span></p>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{% url 'animals:edit_animal' animal.id %}" class="btn btn-success btn-sm me-2">
@@ -98,7 +98,7 @@ Lista de Animais - {{ block.super }}
                             <p><strong>Idade:</strong> {{ animal.age }}</p>
                             <p><strong>Descrição:</strong> {{ animal.description }}</p>
                             <p><strong>Espécie:</strong> {{ animal.specie }}</p>
-                            <p><strong>Raça:</strong> {{ animal.breed.name }}</p>
+                            <p><strong>Raça:</strong> {{ animal.specie.name }}</p>
                             <p><strong>Cor:</strong> {{ animal.color }}</p>
                             <p><strong>Gênero:</strong> {{ animal.get_gender_display }}</p>
                             <p><strong>Status de Adoção:</strong>
@@ -189,7 +189,7 @@ Lista de Animais - {{ block.super }}
             searchAnimals();
         });
 
-        document.getElementById('breed-filter').addEventListener('change', function () {
+        document.getElementById('specie-filter').addEventListener('change', function () {
             searchAnimals();
         });
 
@@ -198,7 +198,7 @@ Lista de Animais - {{ block.super }}
             input = document.getElementById("search-input");
             filter = input.value.toUpperCase();
             cards = sortedCards;
-            breedFilter = document.getElementById("breed-filter").value.toUpperCase();
+            breedFilter = document.getElementById("specie-filter").value.toUpperCase();
 
             var matchingCards = [];
             var nonMatchingCards = [];
@@ -206,10 +206,10 @@ Lista de Animais - {{ block.super }}
             for (i = 0; cards && i < cards.length; i++) {
                 card = cards[i];
                 title = card.querySelector(".card-title");
-                breed = card.querySelector(".card-text");
+                specie = card.querySelector(".card-text");
 
                 if ((title.innerText.toUpperCase().indexOf(filter) > -1) &&
-                    (breed.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
+                    (specie.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
                     matchingCards.push(card);
                 } else {
                     card.style.display = "none";
