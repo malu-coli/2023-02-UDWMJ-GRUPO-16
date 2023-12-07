@@ -60,8 +60,8 @@ Lista de Animais - {{ block.super }}
                     <div class="adopted-banner">Adotado</div>
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="animal-name">{{ animal.name }}</h5>
-                        <p class="animal-breed">{{ animal.breed }}</p>
+                        <h5 class="card-title">{{ animal.name }}</h5>
+                        <p class="card-text">{{ animal.breed }}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{% url 'animals:edit_animal' animal.id %}" class="btn btn-success btn-sm me-2">
@@ -145,8 +145,8 @@ Lista de Animais - {{ block.super }}
     document.addEventListener('DOMContentLoaded', function () {
         function sortCards(cards) {
             return Array.from(cards).sort(function (a, b) {
-                var nameA = a.querySelector(".animal-name").innerText.toUpperCase();
-                var nameB = b.querySelector(".animal-name").innerText.toUpperCase();
+                var nameA = a.querySelector(".card-title").innerText.toUpperCase();
+                var nameB = b.querySelector(".card-title").innerText.toUpperCase();
 
 
                 var isAdoptedA = a.querySelector(".adopted-banner") !== null;
@@ -205,8 +205,8 @@ Lista de Animais - {{ block.super }}
 
             for (i = 0; cards && i < cards.length; i++) {
                 card = cards[i];
-                title = card.querySelector(".animal-name");
-                breed = card.querySelector(".animal-breed");
+                title = card.querySelector(".card-title");
+                breed = card.querySelector(".card-text");
 
                 if ((title.innerText.toUpperCase().indexOf(filter) > -1) &&
                     (breed.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
