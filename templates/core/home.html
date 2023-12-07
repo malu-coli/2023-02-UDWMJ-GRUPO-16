@@ -1,49 +1,62 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ block.super }}
+{{ block.super }}
 {% endblock title %}
 
 {% block body %}
 
+<section class="intro" id="intro">
+  <div class="container">
+    <div class="row">
+      <div class="col img-col">
+        <img src="staticfiles\img\capybara.png" class="img-fluid" alt="Capivara Gaúcha"
+          style="width: 400px; height: 100%;">
+      </div>
+      <div class="col">
+        <h1>Bem-Vindo!</h1>
+        <p>A aplicação ZooTe! têm como objetivo auxiliar no processo de adoção de animais em abrigo, que precisam de
+          amor, carinho e o mais importante, uma família!</p>
 
-
-
-<section class= "intro" id="intro">
-    <div class="container">
-      <div class="row">
-        <div class="col img-col">
-          <img src="staticfiles\img\capybara.png" class="img-fluid" alt="Capivara Gaúcha" style="width: 300px; height: 100%;">
-              </div>
-        <div class="col">
-          <h1>ZooTe!<br></h1>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam
-            malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
-        </div>
-
+        <h3>Sobre o sistema atual:</h3>
+        <p>Esta plataforma foi criada para o corpo administrativo, com o intuito de facilitar a gerência dos animais
+          presentes no abrigo. Com ferramentas para manuseio de dados de animais e clientes, que auxiliam o
+          trabalho dos responsáveis</p>
+      </div>
 
       <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+            aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner">
+
+        <div class="carousel-inner" id="carousel-inner">
           <div class="carousel-item active">
-            <img src="staticfiles\img\1288571.jpg" class="d-block w-100" alt="...">
+            <img src="staticfiles\img\2.png" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="staticfiles\img\cAVANHA LINDO.png" class="d-block w-100" alt="...">
+            <img src="staticfiles\img\3.jpg" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="staticfiles\img\minakushi.jpg" class="d-block w-100" alt="...">
+            <img src="staticfiles\img\1.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="staticfiles\img\4.jpg" class="d-block w-100" alt="...">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>

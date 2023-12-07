@@ -60,8 +60,8 @@ Lista de Animais - {{ block.super }}
                     <div class="adopted-banner">Adotado</div>
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ animal.name }}</h5>
-                        <p class="card-text">{{ animal.breed }}</p>
+                        <h5 class="animal-name">{{ animal.name }}</h5>
+                        <p class="animal-breed">{{ animal.breed }}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{% url 'animals:edit_animal' animal.id %}" class="btn btn-success btn-sm me-2">
@@ -143,11 +143,22 @@ Lista de Animais - {{ block.super }}
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        function sortCardsAlphabetically(cards) {
+        function sortCards(cards) {
             return Array.from(cards).sort(function (a, b) {
-                var nameA = a.querySelector(".card-title").innerText.toUpperCase();
-                var nameB = b.querySelector(".card-title").innerText.toUpperCase();
-                return nameA.localeCompare(nameB);
+                var nameA = a.querySelector(".animal-name").innerText.toUpperCase();
+                var nameB = b.querySelector(".animal-name").innerText.toUpperCase();
+
+
+                var isAdoptedA = a.querySelector(".adopted-banner") !== null;
+                var isAdoptedB = b.querySelector(".adopted-banner") !== null;
+
+                if (isAdoptedA && !isAdoptedB) {
+                    return 1;
+                } else if (!isAdoptedA && isAdoptedB) {
+                    return -1;
+                } else {
+                    return nameA.localeCompare(nameB); 
+                }
             });
         }
 
@@ -170,7 +181,7 @@ Lista de Animais - {{ block.super }}
 
         var cards = document.getElementsByClassName("card");
 
-        var sortedCards = sortCardsAlphabetically(cards);
+        var sortedCards = sortCards(cards);
 
         updateCardLayout(sortedCards);
 
@@ -194,8 +205,8 @@ Lista de Animais - {{ block.super }}
 
             for (i = 0; cards && i < cards.length; i++) {
                 card = cards[i];
-                title = card.querySelector(".card-title");
-                breed = card.querySelector(".card-text");
+                title = card.querySelector(".animal-name");
+                breed = card.querySelector(".animal-breed");
 
                 if ((title.innerText.toUpperCase().indexOf(filter) > -1) &&
                     (breed.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
@@ -213,12 +224,7 @@ Lista de Animais - {{ block.super }}
             });
         }
     });
-
-    document.addEventListener('DOMContentLoaded', function () {
-        var myModal = new bootstrap.Modal(document.getElementById('animalModal{{ animal.id }}'));
-    });
 </script>
-
 
 {% endfor %}
 {% endblock body %}

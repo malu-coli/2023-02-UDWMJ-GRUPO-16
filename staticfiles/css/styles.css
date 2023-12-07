@@ -39,10 +39,22 @@ section h1 {
     margin-bottom: 20px !important;
   }
 
+  section h3 {
+    text-transform: uppercase !important;
+    font-weight: 900 !important;
+    color: #2B9348 !important;
+    text-align: left !important;
+    margin-bottom: 20px !important;
+  }
+
 section p {
     font-size: 16px !important;
     font-weight: 300 !important;
   }
+
+#carousel-inner{
+    padding-top: 30px !important;
+}
 
 #card-animal {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5) !important;

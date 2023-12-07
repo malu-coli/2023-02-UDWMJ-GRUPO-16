@@ -3,7 +3,7 @@ from django.forms import ValidationError
 
 class Specie(models.Model):
     name = models.CharField('Nome', max_length=50, unique=True)
-    description = models.TextField('Descricao', max_length=100)
+    description = models.TextField('Descricao', max_length=500)
 
     class Meta:
         verbose_name = 'Especie'
