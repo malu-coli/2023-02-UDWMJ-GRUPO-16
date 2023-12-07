@@ -1,0 +1,86 @@
+.animal-card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;  
+    
+}
+
+.animal-image {
+    flex-grow: 1 !important;
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 200px !important; 
+}
+
+nav {
+    box-shadow: 0 0 20px 0 rgba(0,0,0,2) !important; 
+    background-color: #04471c !important;
+}
+
+.intro {
+    padding-top: 80px !important;
+    padding-bottom: 50px !important;
+  }
+
+.intro-forms {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+
+.alert.alert-danger {
+    padding-top: 60px;
+}
+
+section h1 {
+    text-transform: uppercase !important;
+    font-weight: 900 !important;
+    color: #2B9348 !important;
+    text-align: left !important;
+    margin-bottom: 20px !important;
+  }
+
+  section h3 {
+    text-transform: uppercase !important;
+    font-weight: 900 !important;
+    color: #2B9348 !important;
+    text-align: left !important;
+    margin-bottom: 20px !important;
+  }
+
+section p {
+    font-size: 16px !important;
+    font-weight: 300 !important;
+  }
+
+#carousel-inner{
+    padding-top: 30px !important;
+}
+
+#card-animal {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+#card-animal:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+#animalCardContainer {
+    display: flex !important;
+    flex-wrap: wrap !important; 
+}
+
+.card {
+    flex: 0 0 calc(33.33% - 20px) !important;
+    margin: 10px !important;
+    padding: 0 !important;
+    max-height: 336px !important;
+    width: 350px !important;
+}
+
+#btn-navbar:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+

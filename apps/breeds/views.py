@@ -27,7 +27,7 @@ def add_breed(request):
 
 def list_breeds(request):
     template_name = 'breeds/list_breeds.html'
-    breeds = Breed.objects.filter()
+    breeds = Breed.objects.all().order_by('name')
     context = {
         'breeds': breeds
     }

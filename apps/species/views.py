@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import Specie
 from rest_framework import viewsets
 from .serializer import SpecieSerializer
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import SpecieForm
 from .models import Specie
+from django.contrib import messages
 
 class SpecieViewSet(viewsets.ModelViewSet):
     queryset = Specie.objects.all()
@@ -20,13 +20,17 @@ def add_specie(request):
             f.save()
             form.save_m2m()
             return redirect('species:list_species')
+        else:
+            for errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f" {error}")
     form = SpecieForm()
     context['form'] = form
     return render(request, template_name, context)
 
 def list_species(request):
     template_name = 'species/list_species.html'
-    species = Specie.objects.filter()
+    species = Specie.objects.all().order_by('name')
     context = {
         'species': species
     }

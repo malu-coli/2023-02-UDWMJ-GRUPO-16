@@ -1,61 +1,104 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %} 
+{% load widget_tweaks %}
 
 {% block title %}
-
-    Adicionar Categoria - {{ block.super }}
-
+Adicionar Animal - {{ block.super }}
 {% endblock title %}
 
 {% block body %}
 
-    <div class="container">
-        <br />
-    <h5><b>Cadastro de Animal</b></h5>
-        <div class="row">
-            <div class ="col-md-12">
-                <form action="" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                   <label for="{{ form.name.id_for_label }}">Nome</label>
-                   {{ form.name|add_class:"form-control" }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.age.id_for_label }}">Idade</label>
-                    {{ form.age|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.description.id_for_label }}">Descricao</label>
-                    {{ form.description|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.specie.id_for_label }}">Espécie</label>
-                    {{ form.specie|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.breed.id_for_label }}">Raça</label>
-                    {{ form.breed|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.color.id_for_label }}">Cor</label>
-                    {{ form.color|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.gender.id_for_label }}">Gênero</label>
-                    {{ form.gender|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.is_adopted.id_for_label }}">Status de adoção</label>
-                    {{ form.is_adopted|add_class:"form-control" }}
-                 </div>
-                 <div class="form-group">
-                    <label for="{{ form.image.id_for_label }}">Fotinho do bichinho</label>
-                    {{ form.image|add_class:"form-control" }}
-                 </div>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<section class="intro-forms" id="intro">
+   <div class="container mt-4">
+      <h1 class="mb-4"><b>Cadastro de Animal</b></h1>
+      <div class="row justify-content-center">
+         <form class="row g-3 needs-validation" action="" method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
 
+            <div class="col-md-6">
+               <label for="{{ form.name.id_for_label }}" class="form-label">Nome</label>
+               {{ form.name|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, insira um nome.
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <label for="{{ form.age.id_for_label }}" class="form-label">Idade</label>
+               {{ form.age|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, insira uma idade válida.
+               </div>
+            </div>
+
+            <div class="col-md-12">
+               <label for="{{ form.description.id_for_label }}" class="form-label">Descrição</label>
+               {{ form.description|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, insira uma descrição.
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <label for="{{ form.specie.id_for_label }}" class="form-label">Espécie</label>
+               {{ form.specie|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, selecione uma espécie.
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <label for="{{ form.breed.id_for_label }}" class="form-label">Raça</label>
+               {{ form.breed|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, selecione uma raça.
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <label for="{{ form.color.id_for_label }}" class="form-label">Cor</label>
+               {{ form.color|add_class:"form-control"}}
+               <div class="invalid-feedback">
+                  Por favor, insira uma cor.
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <label for="{{ form.gender.id_for_label }}" class="form-label">Gênero</label>
+               {{ form.gender|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, selecione um gênero.
+               </div>
+            </div>
+
+            <div class="mb-3">
+               <label for="{{ form.image.id_for_label }}" class="form-label">Fotinho do bichinho</label>
+               {{ form.image|add_class:"form-control" }}
+               <div class="invalid-feedback">
+                  Por favor, faça o upload de uma imagem válida.
+               </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
+         </form>
+      </div>
+   </div>
+</section>
+
+<script>
+   (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(function (form) {
+         form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+               event.preventDefault()
+               event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+         }, false)
+      })
+   })()
+</script>
 {% endblock body %}

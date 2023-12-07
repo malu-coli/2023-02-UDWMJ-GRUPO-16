@@ -1,64 +1,230 @@
 {% extends 'base.html' %}
 
 {% block title %}
-
-    Lista de Categorias - {{ block.super }}
-
+Lista de Animais - {{ block.super }}
 {% endblock title %}
 
 {% block body %}
 
+<style>
+    .adopted-banner {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+</style>
+
+<section class="intro" id="intro">
     <div class="container">
-        <br />
-        <h5><b>Lista de Animais</b></h5>
-        <div class="row">
-            <div class ="col-md-12">
-                <br />
-                    <a href="{% url 'animals:add_animal' %}">Cadastro de novo animal</a>
-                <br />
-                <br />
-                <table class="table table-hover">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Idade</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Espécie</th>
-                    <th scope="col">Raça</th>
-                    <th scope="col">Cor</th>
-                    <th scope="col">Gênero</th>
-                    <th scope="col">Status de adoção</th>
-                    <th scope="col">Fotinho do bichinho</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for animal in animals %}
-                        <tr>
-                            <th scope="row">{{ animal.id }}</th>
-                            <td>{{ animal.name }}</td>
-                            <td>{{ animal.age }}</td>
-                            <td>{{ animal.description }}</td>
-                            <td>{{ animal.specie }}</td>
-                            <td>{{ animal.breed }}</td>
-                            <td>{{ animal.color }}</td>
-                            <td>{{ animal.gender }}</td>
-                            <td>{{ animal.is_adopted }}</td>
-                            <td>{{ animal.image }}</td>
-                            <td>
-                                <a href="{% url 'animals:edit_animal' animal.id %}" class="btn btn-primary btn-sm">Editar</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'animals:delete_animal' animal.id %}" class="btn btn-danger btn-sm ">Excluir</a>
-                            </td>
-                        </tr> 
-                    {% endfor %}
-                </tbody>
-                </table>
+        <div class="d-flex justify-content-between align-items-start">
+            <h1 class="flex-grow-1"><b>Lista de Animais</b></h1>
+            <a class="btn btn-success" style="margin-top:3px;" href="{% url 'animals:add_animal' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                </svg>
+                Cadastro de novo Animal
+            </a>
+        </div>
+        <div class="input-group mb-3 justify-content-end ms-1">
+            <input type="text" class="form-control" placeholder="Pesquisar pelo nome" id="search-input">
+            <button class="btn btn-outline-success" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+            </button>
+            <select class="btn btn-success ms-3" id="specie-filter">
+                <option value="">Todas as Espécies</option>
+                {% for specie in species %}
+                <option value="{{ specie }}">{{ specie }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="animal-card-container"
+            style="margin-bottom:40px;">
+            {% for animal in animals %}
+            <div class="col">
+                <div class="col card" id="card-animal">
+                    <img src="{{ animal.image.url }}" class="card-img-top animal-image" alt="{{ animal.name }}"
+                        data-bs-toggle="modal" data-bs-target="#animalModal{{ animal.id }}">
+                    {% if animal.is_adopted %}
+                    <div class="adopted-banner">Adotado</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ animal.name }}</h5>
+                        <p class="card-text">{{ animal.specie }}<span> {{ animal.breed.name}} </span></p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <a href="{% url 'animals:edit_animal' animal.id %}" class="btn btn-success btn-sm me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg> Editar
+                        </a>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#confirmDelete{{ animal.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path
+                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                            </svg> Excluir
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Detalhes -->
+            <div class="modal fade" id="animalModal{{ animal.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ animal.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Idade:</strong> {{ animal.age }}</p>
+                            <p><strong>Descrição:</strong> {{ animal.description }}</p>
+                            <p><strong>Espécie:</strong> {{ animal.specie }}</p>
+                            <p><strong>Raça:</strong> {{ animal.specie.name }}</p>
+                            <p><strong>Cor:</strong> {{ animal.color }}</p>
+                            <p><strong>Gênero:</strong> {{ animal.get_gender_display }}</p>
+                            <p><strong>Status de Adoção:</strong>
+                                {% if animal.is_adopted %}
+                                Adotado
+                                {% else %}
+                                Não adotado
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Confirmação de Exclusão -->
+            <div class="modal fade" id="confirmDelete{{ animal.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmar Exclusão</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Você tem certeza de que deseja excluir o animal '{{ animal.name }}'? Essa ação não pode
+                                ser desfeita.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="{% url 'animals:delete_animal' animal.id %}" class="btn btn-danger">Confirmar
+                                Exclusão</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function sortCards(cards) {
+            return Array.from(cards).sort(function (a, b) {
+                var nameA = a.querySelector(".card-title").innerText.toUpperCase();
+                var nameB = b.querySelector(".card-title").innerText.toUpperCase();
+
+
+                var isAdoptedA = a.querySelector(".adopted-banner") !== null;
+                var isAdoptedB = b.querySelector(".adopted-banner") !== null;
+
+                if (isAdoptedA && !isAdoptedB) {
+                    return 1;
+                } else if (!isAdoptedA && isAdoptedB) {
+                    return -1;
+                } else {
+                    return nameA.localeCompare(nameB); 
+                }
+            });
+        }
+
+        function updateCardLayout(cards) {
+            var container = document.getElementById("animal-card-container");
+
+            container.innerHTML = "";
+
+            cards.forEach(function (card) {
+                var col = document.createElement("div");
+                col.classList.add("col");
+                col.appendChild(card);
+                container.appendChild(col);
+            });
+
+            container.querySelectorAll('.card').forEach(function (card) {
+                card.style.margin = '10px';
+            });
+        }
+
+        var cards = document.getElementsByClassName("card");
+
+        var sortedCards = sortCards(cards);
+
+        updateCardLayout(sortedCards);
+
+        document.getElementById('search-input').addEventListener('input', function () {
+            searchAnimals();
+        });
+
+        document.getElementById('specie-filter').addEventListener('change', function () {
+            searchAnimals();
+        });
+
+        function searchAnimals() {
+            var input, filter, cards, card, title, breedFilter, i;
+            input = document.getElementById("search-input");
+            filter = input.value.toUpperCase();
+            cards = sortedCards;
+            breedFilter = document.getElementById("specie-filter").value.toUpperCase();
+
+            var matchingCards = [];
+            var nonMatchingCards = [];
+
+            for (i = 0; cards && i < cards.length; i++) {
+                card = cards[i];
+                title = card.querySelector(".card-title");
+                specie = card.querySelector(".card-text");
+
+                if ((title.innerText.toUpperCase().indexOf(filter) > -1) &&
+                    (specie.innerText.toUpperCase().indexOf(breedFilter) > -1 || breedFilter === '')) {
+                    matchingCards.push(card);
+                } else {
+                    card.style.display = "none";
+                    nonMatchingCards.push(card);
+                }
+            }
+
+            updateCardLayout(matchingCards);
+
+            nonMatchingCards.forEach(function (card) {
+                card.style.display = "";
+            });
+        }
+    });
+</script>
+
+{% endfor %}
 {% endblock body %}
