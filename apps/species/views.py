@@ -30,7 +30,7 @@ def add_specie(request):
 
 def list_species(request):
     template_name = 'species/list_species.html'
-    species = Specie.objects.filter()
+    species = Specie.objects.all().order_by('name')
     context = {
         'species': species
     }

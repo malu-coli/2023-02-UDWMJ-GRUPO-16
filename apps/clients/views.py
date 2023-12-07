@@ -29,7 +29,7 @@ def add_client(request):
 
 def list_clients(request):
     template_name = 'clients/list_clients.html'
-    clients = Client.objects.filter()
+    clients = Client.objects.all().order_by('first_name')
     context = {
         'clients': clients
     }
